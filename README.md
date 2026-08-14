@@ -1,42 +1,46 @@
-# DevSecOps CI/CD Security Pipeline
-
-[![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-PR%20security%20gates-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](.github/workflows/devsecops-pipeline.yml)
-[![Docker](https://img.shields.io/badge/Docker-container%20scan-2496ED?style=for-the-badge&logo=docker&logoColor=white)](Dockerfile)
-[![Terraform](https://img.shields.io/badge/Terraform-IaC%20scan-844FBA?style=for-the-badge&logo=terraform&logoColor=white)](terraform/main.tf)
-[![Snyk](https://img.shields.io/badge/Snyk-SCA%20gate-4C4A73?style=for-the-badge&logo=snyk&logoColor=white)](package.json)
-[![OWASP ZAP](https://img.shields.io/badge/OWASP%20ZAP-DAST%20gate-00549E?style=for-the-badge&logo=owasp&logoColor=white)](zap/rules.tsv)
-[![Impact](https://img.shields.io/badge/Impact-70%25%20defect%20reduction-16A34A?style=for-the-badge)](#project-impact)
-
-An enterprise-style GitHub Actions security pipeline that shifts vulnerability detection into the pull request workflow. The project integrates **Trivy**, **tfsec**, **Snyk**, and **OWASP ZAP** to enforce automated PR-blocking on critical security findings before code reaches `main`.
-
-This repository is designed as a production-ready portfolio artifact for client onboarding conversations. It demonstrates how a security analyst or DevSecOps engineer can translate security policy into repeatable CI/CD controls that reduce production security defects, improve auditability, and give developers fast feedback while code is still fresh.
-
 <p align="center">
-  <img src="docs/assets/devsecops-pipeline.svg" alt="DevSecOps CI/CD Security Pipeline architecture diagram" width="100%">
+  <img src="assets/logo.svg" width="96" height="96" alt="ShiftLeft Gate logo" />
 </p>
 
-## Executive Summary
+<h1 align="center">ShiftLeft Gate</h1>
 
-This project demonstrates how to turn security policy into a working CI/CD enforcement layer. Every pull request to `main` is assessed across four high-value security domains: container risk, infrastructure-as-code risk, dependency risk, and dynamic runtime risk.
+<p align="center">
+  A GitHub Actions pipeline that turns <strong>Trivy</strong>, <strong>tfsec</strong>, <strong>Snyk</strong>, and <strong>OWASP ZAP</strong><br />
+  into automated pull-request gates that block critical security findings before they reach <code>main</code>.
+</p>
 
-The result is a portfolio-ready implementation that shows both technical depth and business impact: critical findings become automated merge blockers, while scanner output becomes evidence for security reviews, client onboarding, and audit conversations.
+<p align="center">
+  <a href=".github/workflows/shiftleft-gate.yml"><img src="https://img.shields.io/badge/GitHub%20Actions-PR%20security%20gates-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions PR security gates" /></a>
+  <a href="Dockerfile"><img src="https://img.shields.io/badge/Docker-container%20scan-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker container scan" /></a>
+  <a href="terraform/main.tf"><img src="https://img.shields.io/badge/Terraform-IaC%20scan-844FBA?style=for-the-badge&logo=terraform&logoColor=white" alt="Terraform IaC scan" /></a>
+  <a href="package.json"><img src="https://img.shields.io/badge/Snyk-SCA%20gate-4C4A73?style=for-the-badge&logo=snyk&logoColor=white" alt="Snyk SCA gate" /></a>
+  <a href="zap/rules.tsv"><img src="https://img.shields.io/badge/OWASP%20ZAP-DAST%20gate-00549E?style=for-the-badge&logo=owasp&logoColor=white" alt="OWASP ZAP DAST gate" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-16A34A?style=for-the-badge" alt="MIT License" /></a>
+</p>
 
-## Project Impact
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=githubactions" width="40" height="40" alt="GitHub Actions" />
+  &nbsp;
+  <img src="https://skillicons.dev/icons?i=docker" width="40" height="40" alt="Docker" />
+  &nbsp;
+  <img src="https://skillicons.dev/icons?i=terraform" width="40" height="40" alt="Terraform" />
+  &nbsp;
+  <img src="https://skillicons.dev/icons?i=nodejs" width="40" height="40" alt="Node.js" />
+  &nbsp;
+  <img src="https://skillicons.dev/icons?i=bash" width="40" height="40" alt="Bash" />
+</p>
 
-- Architected a GitHub Actions pipeline integrating Trivy, tfsec, Snyk, and OWASP ZAP.
-- Enforced automated pull request blocking on critical container, IaC, dependency, and runtime web findings.
-- Modeled the same control pattern used to reduce production security defect rate by **70% across 3 client codebases**.
-- Packaged the implementation as a reusable portfolio artifact for technical interviews, client onboarding, and security transformation discussions.
+---
 
-## Impact Snapshot
+## What this is
 
-| Metric | Outcome |
-| --- | --- |
-| Production security defect reduction | 70% reduction across 3 client codebases |
-| Enforcement point | Pull requests targeting `main` |
-| Security coverage | Container, IaC, SCA, and DAST |
-| Merge policy | Critical findings block PR completion |
-| Evidence produced | GitHub Actions logs and ZAP report artifacts |
+A GitHub Actions security pipeline that shifts vulnerability detection into the pull request, before code merges. It integrates **Trivy**, **tfsec**, **Snyk**, and **OWASP ZAP** to enforce automated PR-blocking on critical findings across four layers: container, infrastructure-as-code, dependency, and runtime web risk.
+
+Every gate is **fail-closed**: each scanner is configured to return a non-zero exit code on a critical finding, GitHub Actions marks the check as failed, and branch protection can require that check before merge. The repository ships with intentionally vulnerable fixtures — an outdated Docker base image, an open-to-the-internet security group, pinned CVE-laden npm packages — specifically so you can watch the pipeline catch and block them.
+
+<p align="center">
+  <img src="docs/assets/shiftleft-gate-pipeline.svg" alt="ShiftLeft Gate architecture diagram" width="100%">
+</p>
 
 ## Architecture
 
@@ -91,12 +95,14 @@ Blocking controls are implemented through:
 │   ├── dependabot.yml
 │   ├── pull_request_template.md
 │   └── workflows/
-│       └── devsecops-pipeline.yml
+│       └── shiftleft-gate.yml
 ├── app/
 │   └── server.js
+├── assets/
+│   └── logo.svg
 ├── docs/
 │   ├── assets/
-│   │   └── devsecops-pipeline.svg
+│   │   └── shiftleft-gate-pipeline.svg
 │   ├── branch-protection.md
 │   ├── quickstart.md
 │   ├── remediation-playbook.md
@@ -130,7 +136,7 @@ This repository includes controlled vulnerable examples so the pipeline can prov
 - `package.json` pins vulnerable dependency versions, including a critical `minimist` advisory path for SCA validation.
 - `app/server.js` provides a minimal HTTP target so OWASP ZAP can scan a live container during CI.
 
-These examples are intentionally unsafe and are included only to demonstrate security gate enforcement.
+These examples are intentionally unsafe and are included only to demonstrate security gate enforcement. Run `make audit-critical` locally to see the exact npm advisories the SCA gate would block on.
 
 ## GitHub Secret Required
 
@@ -148,27 +154,15 @@ Repository Settings > Secrets and variables > Actions > New repository secret
 
 The token is consumed only from GitHub Actions secrets and is never committed to source control.
 
-## How This Reduces Production Security Defects
+## Why Shift Left
 
-Traditional security reviews often happen late, after code has already been merged, deployed, or handed to another team. This pipeline moves detection to the earliest practical point: the pull request.
+Security reviews that happen late — after code is merged, deployed, or handed to another team — make every fix more expensive and every root cause harder to trace. Moving detection to the pull request changes that:
 
-That shift reduces production risk by:
-
-- Catching critical vulnerabilities before merge.
-- Making remediation cheaper because developers still have full context.
-- Preventing repeated classes of defects through automated policy enforcement.
-- Creating audit-friendly evidence that security controls ran on every protected change.
-- Standardizing security review across application, container, infrastructure, dependency, and runtime layers.
-
-## Client Onboarding Use Case
-
-This repository can be used as a working demonstration during onboarding sessions with engineering teams or clients. It gives stakeholders a concrete view of:
-
-- What security checks run on every pull request.
-- Why critical findings block merge.
-- Which tool owns each layer of security coverage.
-- How evidence is captured for review and audit follow-up.
-- How branch protection turns scanner output into a real governance control.
+- Critical vulnerabilities are caught before merge, not after deployment.
+- Remediation is cheaper because the developer still has full context on the change.
+- Automated policy enforcement prevents the same class of defect from recurring.
+- Every protected change produces GitHub Actions logs and ZAP report artifacts as evidence a control actually ran.
+- Container, IaC, dependency, and runtime coverage are standardized under one required check instead of four separate manual reviews.
 
 ## Branch Protection Recommendation
 
@@ -182,19 +176,29 @@ Recommended settings:
 - Require the `PR Security Gates` check.
 - Restrict direct pushes to `main`.
 
-## Portfolio Talking Points
+## What This Demonstrates
 
-This project demonstrates practical DevSecOps ownership across:
-
-- CI/CD security architecture.
-- Shift-left security automation.
-- Container vulnerability scanning.
-- Terraform IaC misconfiguration detection.
-- Software Composition Analysis governance.
-- Baseline DAST against ephemeral CI environments.
+- CI/CD security architecture and shift-left automation design.
+- Container vulnerability scanning with Trivy.
+- Terraform IaC misconfiguration detection with tfsec.
+- Software Composition Analysis governance with Snyk.
+- Baseline DAST against an ephemeral CI environment with OWASP ZAP.
 - Automated PR-blocking using deterministic scanner exit codes.
-- Security control design that maps directly to developer workflow.
+- Security control design that maps directly onto the developer's normal pull-request workflow.
+
+## Local Verification
+
+```bash
+make verify        # validates workflow YAML, lints app/server.js, and runs the SCA audit
+make docker-build   # builds the demo container locally
+```
+
+See [docs/quickstart.md](docs/quickstart.md) for the full local smoke-test walkthrough, including how to reproduce the ZAP scan against a locally running container.
 
 ## Disclaimer
 
 The vulnerable files in this repository are deliberate test fixtures. They are designed to trigger security tools and should not be deployed to a real production environment.
+
+## License
+
+[MIT](LICENSE)

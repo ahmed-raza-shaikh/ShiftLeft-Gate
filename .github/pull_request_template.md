@@ -16,7 +16,7 @@ List the checks run locally or in CI.
 
 ```text
 node --check app/server.js
-ruby -e 'require "yaml"; YAML.load_file(".github/workflows/devsecops-pipeline.yml")'
+ruby -e 'require "yaml"; YAML.load_file(".github/workflows/shiftleft-gate.yml")'
 ```
 
 ## Notes for Reviewers

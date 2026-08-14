@@ -17,9 +17,9 @@ The pipeline intentionally combines static, dependency, container, infrastructur
 
 The most important design choice is that findings are not treated as advisory-only output. Critical issues return non-zero exit codes, which turns the security policy into an automated merge gate.
 
-## Client Onboarding Narrative
+## Team Adoption Narrative
 
-This repository can be reused during client onboarding to show how security controls are introduced without forcing developers to leave their normal workflow. The implementation gives teams:
+This pattern shows how security controls can be introduced without forcing developers to leave their normal workflow. The implementation gives teams:
 
 - Fast feedback in the pull request.
 - Clear ownership because findings point to files, packages, or runtime endpoints.

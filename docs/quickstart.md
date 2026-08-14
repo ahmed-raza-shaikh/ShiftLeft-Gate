@@ -31,8 +31,8 @@ The expected response is:
 ## Container Smoke Test
 
 ```bash
-docker build -t devsecops-security-pipeline-demo:local .
-docker run --rm -p 8080:8080 devsecops-security-pipeline-demo:local
+docker build -t shiftleft-gate-demo:local .
+docker run --rm -p 8080:8080 shiftleft-gate-demo:local
 ```
 
 The container exists so GitHub Actions can run OWASP ZAP against a live target.
