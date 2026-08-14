@@ -1,4 +1,4 @@
-name: DevSecOps CI/CD Security Pipeline
+name: ShiftLeft Gate
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ permissions:
   actions: read
 
 env:
-  IMAGE_NAME: devsecops-security-pipeline-demo
+  IMAGE_NAME: shiftleft-gate-demo
   IMAGE_TAG: pr-${{ github.event.pull_request.number || github.run_number }}
   TARGET_PORT: "8080"
   TARGET_URL: http://127.0.0.1:8080
